@@ -1,0 +1,1 @@
+var json_instansipemerintah_7 = {"type":"FeatureCollection","name":"instansipemerintah_7","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Balai Desa Dawuhan Kulon","jmlh kar":"7"},"geometry":{"type":"Point","coordinates":[109.19181665936226,-7.382038266405742]}}]}

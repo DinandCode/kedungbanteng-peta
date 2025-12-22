@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WebGIS Kecamatan Kedungbanteng</title>
 
-  <!-- Bootstrap 5 CDN -->
+  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Google Font -->
@@ -47,7 +47,106 @@
 
     .hero p {
       color: #cbd5f5;
-      max-width: 600px;
+      max-width: 550px;
+    }
+
+    /* ================= MAP GLASS HERO ================= */
+    .map-glass {
+      position: relative;
+      max-width: 520px;
+      margin: auto;
+      border-radius: 28px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow:
+        0 30px 80px rgba(56,189,248,0.35),
+        inset 0 0 40px rgba(255,255,255,0.05);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .map-glass img {
+      width: 100%;
+      display: block;
+      opacity: 0.9;
+      transform: scale(1.05);
+    }
+
+    .map-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        120deg,
+        rgba(15,23,42,0.55),
+        rgba(30,64,175,0.35),
+        rgba(15,23,42,0.6)
+      );
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* ================= HIGHLIGHT KEDUNGBANTENG ================= */
+    .map-marker {
+      position: absolute;
+      top: 58%;   /* atur sesuai posisi peta */
+      left: 54%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+    }
+
+    .map-marker::before {
+      content: "";
+      width: 14px;
+      height: 14px;
+      background: #38bdf8;
+      border-radius: 50%;
+      display: block;
+      box-shadow:
+        0 0 10px rgba(56,189,248,0.9),
+        0 0 25px rgba(56,189,248,0.7);
+    }
+
+    .pulse {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 42px;
+      height: 42px;
+      background: rgba(56,189,248,0.25);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulse 2.5s infinite;
+    }
+
+    .label {
+      position: absolute;
+      top: -36px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15,23,42,0.9);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      color: #38bdf8;
+      border: 1px solid rgba(56,189,248,0.4);
+      white-space: nowrap;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1.4);
+        opacity: 0;
+      }
     }
 
     /* GLASS CARD */
@@ -58,7 +157,6 @@
       border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
-    /* MAP */
     .map-wrapper {
       height: 550px;
       border-radius: 20px;
@@ -70,16 +168,6 @@
       width: 100%;
       height: 100%;
       border: none;
-    }
-
-    /* INFO ICON */
-    .info-box {
-      transition: all .3s ease;
-    }
-
-    .info-box:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 15px 40px rgba(56,189,248,0.25);
     }
 
     footer {
@@ -94,85 +182,92 @@
 </head>
 <body>
 
-<!-- HERO SECTION -->
+<!-- HERO -->
 <section class="hero">
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-lg-7">
-        <h1 class="display-4 mb-4">WebGIS Kecamatan <br><span class="text-info">Kedungbanteng</span></h1>
+
+      <!-- TEXT -->
+      <div class="col-lg-6">
+        <h1 class="display-4 mb-4">
+          Geografis Kecamatan <br>
+          <span class="text-info">Kedungbanteng</span>
+        </h1>
         <p class="mb-4">
-          Visualisasi data spasial Kecamatan Kedungbanteng berbasis WebGIS hasil
-          export QGIS. Dirancang modern, responsif, dan informatif untuk
-          kebutuhan akademik maupun publik.
+         Penyajian data spasial wilayah Kecamatan Kedungbanteng berbasis WebGIS hasil pengolahan QGIS.
         </p>
-        <a href="#peta" class="btn btn-info btn-lg rounded-pill px-4">Lihat Peta</a>
+
+        <div class="d-flex flex-wrap gap-3">
+          <a href="#peta" class="btn btn-info btn-lg rounded-pill px-4">
+            Lihat Peta
+          </a>
+
+          <div class="dropdown">
+            <button class="btn btn-outline-info btn-lg rounded-pill dropdown-toggle"
+              type="button" data-bs-toggle="dropdown">
+              Peta Desa
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="desa1.html">Desa Kedungbanteng</a></li>
+              <li><a class="dropdown-item" href="desa2.html">Desa Kebocoran</a></li>
+              <li><a class="dropdown-item" href="Desa Dakul/index.html">Desa Dawuhan Kulon</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
+
+      <!-- MAP IMAGE -->
+      <div class="col-lg-6 mt-5 mt-lg-0">
+        <div class="map-glass">
+          <img src="cakep.png" alt="Peta Indonesia">
+
+          <!-- MARKER -->
+          <div class="map-marker">
+            <span class="pulse"></span>
+            <span class="label">Kedungbanteng</span>
+          </div>
+
+          <div class="map-overlay"></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- INFO SECTION -->
+<!-- INFO -->
 <section class="py-5">
   <div class="container">
     <div class="row g-4">
       <div class="col-md-4">
-        <div class="glass p-4 h-100 info-box">
+        <div class="glass p-4 h-100">
           <h5 class="text-info">Berbasis QGIS</h5>
-          <p class="text-light small">Peta dihasilkan dari pengolahan data spasial menggunakan QGIS dan diekspor ke WebGIS.</p>
+          <p class="small">Peta dihasilkan dari pengolahan data spasial menggunakan QGIS.</p>
         </div>
       </div>
       <div class="col-md-4">
-        <div class="glass p-4 h-100 info-box">
+        <div class="glass p-4 h-100">
           <h5 class="text-info">Interaktif</h5>
-          <p class="text-light small">Mendukung zoom, layer, dan popup informasi wilayah kecamatan dan desa.</p>
+          <p class="small">Mendukung zoom, layer, dan popup informasi wilayah.</p>
         </div>
       </div>
       <div class="col-md-4">
-        <div class="glass p-4 h-100 info-box">
+        <div class="glass p-4 h-100">
           <h5 class="text-info">Responsif</h5>
-          <p class="text-light small">Tampilan optimal di desktop maupun perangkat mobile.</p>
+          <p class="small">Optimal di desktop dan mobile.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MAP SECTION -->
+<!-- MAP -->
 <section id="peta" class="py-5">
   <div class="container">
     <div class="glass p-4">
-      <h3 class="mb-3 text-info">Peta Interaktif Kecamatan Kedungbanteng</h3>
+      <h3 class="text-info mb-3">Peta Kecamatan Kedungbanteng</h3>
       <div class="map-wrapper">
-        <iframe src="peta.html" title="Peta Kecamatan Kedungbanteng"></iframe>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- IDENTITY -->
-<section class="py-5">
-  <div class="container">
-    <div class="row g-4">
-      <div class="col-lg-6">
-        <div class="glass p-4 h-100">
-          <h4 class="text-info mb-3">Identitas Pembuat</h4>
-          <ul class="list-unstyled">
-            <li><strong>Nama:</strong> Arin Fronika Fariasih</li>
-            <li><strong>NIM:</strong> 23SA21A020</li>
-            <li><strong>Kelas:</strong> SI23B</li>
-            <li><strong>Proyek:</strong> WebGIS Kecamatan Kedungbanteng</li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="glass p-4 h-100">
-          <h4 class="text-info mb-3">Tujuan Website</h4>
-          <p class="text-light">
-            Website ini dibuat sebagai media visualisasi data wilayah kecamatan
-            yang informatif dan mudah diakses, mendukung kebutuhan pembelajaran,
-            analisis spasial, dan publikasi data geografis berbasis web.
-          </p>
-        </div>
+        <iframe src="map.html"></iframe>
       </div>
     </div>
   </div>
@@ -180,9 +275,7 @@
 
 <!-- FOOTER -->
 <footer class="py-4 text-center">
-  <div class="container">
-    <small>© 2025 | Dibuat oleh <span>Arin Fronika Fariasih</span> • Bootstrap 5 • WebGIS</small>
-  </div>
+  <small>© 2025 | Dibuat oleh <span>Arin Fronika Fariasih</span> • WebGIS</small>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

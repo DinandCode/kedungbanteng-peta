@@ -1,0 +1,1 @@
+var json_pendidikan_5 = {"type":"FeatureCollection","name":"pendidikan_5","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"SD N 2 Dawuhan Kulon","jmlh guru":"10"},"geometry":{"type":"Point","coordinates":[109.189306677931683,-7.372451494365168]}}]}
