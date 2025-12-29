@@ -1,0 +1,1 @@
+var json_blaidesa_1 = {"type":"FeatureCollection","name":"blaidesa_1","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Balai Desa Kedungbanteng"},"geometry":{"type":"Point","coordinates":[109.20057114725499,-7.390486981173089]}}]}

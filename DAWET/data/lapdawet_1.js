@@ -1,0 +1,1 @@
+var json_lapdawet_1 = {"type":"FeatureCollection","name":"lapdawet_1","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Lapangan desa dawuhan wetan"},"geometry":{"type":"Point","coordinates":[109.200662352228832,-7.37897861728822]}}]}

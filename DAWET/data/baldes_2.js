@@ -1,0 +1,1 @@
+var json_baldes_2 = {"type":"FeatureCollection","name":"baldes_2","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Balai Desa Dawuhan Wetan"},"geometry":{"type":"Point","coordinates":[109.200430370720952,-7.377758192833693]}}]}

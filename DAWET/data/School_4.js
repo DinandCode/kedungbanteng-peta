@@ -1,0 +1,1 @@
+var json_School_4 = {"type":"FeatureCollection","name":"School_4","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"MI Ma'arif NU 1 Dawet"},"geometry":{"type":"Point","coordinates":[109.200020350504531,-7.379065867310775]}}]}
