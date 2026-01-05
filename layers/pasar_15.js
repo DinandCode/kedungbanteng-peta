@@ -1,1 +1,0 @@
-var json_pasar_15 = {"type":"FeatureCollection","name":"pasar_15","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Pasar sinom","luas":"80"},"geometry":{"type":"Point","coordinates":[109.201744531997178,-7.384679480368099]}}]}

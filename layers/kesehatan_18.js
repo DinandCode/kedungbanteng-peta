@@ -1,1 +1,0 @@
-var json_kesehatan_18 = {"type":"FeatureCollection","name":"kesehatan_18","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Naja Shafana Clinic","luas":"1329","jmlhdok":"30","jmlhpasien":"500"},"geometry":{"type":"Point","coordinates":[109.202243160250831,-7.383475781341948]}}]}
