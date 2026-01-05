@@ -1,0 +1,1 @@
+var json_balai_8 = {"type":"FeatureCollection","name":"balai_8","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Balai Desa Dawuhan Kulon"},"geometry":{"type":"Point","coordinates":[109.191895400289127,-7.382126887730037]}}]}

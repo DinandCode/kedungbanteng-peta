@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGIS Desa Dawuhan Wetan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .map-fullscreen {
+            position: fixed !important; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 9999; border-radius: 0 !important; background: #0f172a;
+        }
+        
+/* === GLOW & FLOAT ANIMATION UNTUK CARD UTAMA === */
+@keyframes glowPulse {
+  0% {
+    box-shadow:
+      0 0 0 rgba(34, 211, 238, 0),
+      0 20px 50px -20px rgba(0, 0, 0, 0.8);
+  }
+  50% {
+    box-shadow:
+      0 0 40px rgba(34, 211, 238, 0.25),
+      0 30px 70px -25px rgba(0, 0, 0, 0.9);
+  }
+  100% {
+    box-shadow:
+      0 0 0 rgba(34, 211, 238, 0),
+      0 20px 50px -20px rgba(0, 0, 0, 0.8);
+  }
+}
+
+@keyframes floatSoft {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Card utama */
+.glow-card {
+  position: relative;
+  animation: glowPulse 6s ease-in-out infinite,
+             floatSoft 8s ease-in-out infinite;
+  transition: all 0.6s ease;
+}
+
+/* Layer glow luar */
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    rgba(34,211,238,0.35),
+    rgba(56,189,248,0.15),
+    transparent 60%
+  );
+  filter: blur(25px);
+  opacity: 0.6;
+  z-index: -1;
+  transition: opacity 0.6s ease;
+}
+
+/* Hover effect */
+.glow-card:hover {
+  transform: translateY(-10px) scale(1.01);
+}
+
+.glow-card:hover::before {
+  opacity: 1;
+  filter: blur(35px);
+}
+
+    </style>
+</head>
+<body class="bg-[#0f172a] text-slate-200 antialiased">
+
+     <nav class="fixed w-full z-50 top-0 bg-[#0f172a]/80 backdrop-blur-md border-b border-white/10">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+           <div class="flex items-center gap-3">
+    <div class="relative group">
+        <div class="absolute -inset-1 bg-cyan-500 rounded-lg blur opacity-25 group-hover:opacity-50 transition"></div>
+        <img src="images/logo kab.png" alt="Logo WebGIS" class="relative w-12 h-12 object-contain rounded-lg bg-slate-800/50 p-1 border border-white/10">
+    </div>
+    
+    <div>
+        <span class="block text-white font-bold leading-none italic tracking-wide">WebGIS</span>
+        <small class="text-cyan-400 text-[10px] tracking-[0.2em] uppercase font-bold">Kedungbanteng</small>
+    </div>
+</div>
+            <a href="../index.html" class="text-sm font-medium hover:text-cyan-400 flex items-center gap-2 transition group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover:-translate-x-1 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Kembali ke Kecamatan
+            </a>
+        </div>
+    </nav>
+
+<header class="relative pt-32 pb-12 overflow-hidden">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_top_right,_rgba(6,182,212,0.1),transparent_50%)] -z-10"></div>
+    
+    <div class="container mx-auto px-6">
+        <div class="max-w-6xl mx-auto">
+            
+            <div class="glass-card glow-card rounded-[2.5rem] overflow-hidden border border-blue-500/10">
+
+                <div class="flex flex-col lg:flex-row">
+                    
+                    <div class="lg:w-5/12 relative group h-72 lg:h-auto overflow-hidden">
+                        <img src="images/baldes.jpg" 
+                             alt="Balai Desa Dawuhan Kulon" 
+                             class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-transparent to-transparent opacity-60"></div>
+                        
+                        <div class="absolute bottom-6 left-6 flex items-center gap-2">
+                            <div class="bg-cyan-500 p-1.5 rounded-lg shadow-lg shadow-cyan-500/40">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </div>
+                            <span class="text-white text-xs font-bold tracking-wider drop-shadow-md">Dawuhan Wetan</span>
+                        </div>
+                    </div>
+
+                    <div class="lg:w-7/12 p-8 lg:p-12">
+                        <div class="mb-8">
+                            <span class="text-cyan-400 text-[10px] font-bold tracking-[0.4em] uppercase">Pusat Pemerintahan </span>
+                            <h1 class="text-4xl lg:text-5xl font-extrabold text-white mt-2 mb-4 tracking-tight">Balai Desa <span class="text-cyan-500 block">Dawuhan Wetan</span></h1>
+                            <p class="text-slate-400 text-sm leading-relaxed max-w-lg italic border-l-2 border-cyan-500/30 pl-4">
+                                desa di Kecamatan Kedungbanteng, Kabupaten Banyumas, Jawa Tengah, yang dikenal dengan kondisi perbukitan, memiliki 4 RW dan 14 RT dengan sekitar 4575 penduduk, 
+                                serta aktif dalam pengembangan desa seperti Bumdes, Karang Taruna juara, dan program lingkungan
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                            <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/5 group hover:border-cyan-500/30 transition">
+                                <p class="text-slate-500 text-[9px] font-bold uppercase tracking-widest mb-1">Luas Wilayah</p>
+                                <p class="text-white font-bold text-lg leading-none italic"> 162.542<small class="text-[10px] font-normal opacity-50">Ha</small></p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/5 group hover:border-cyan-500/30 transition">
+                                <p class="text-slate-500 text-[9px] font-bold uppercase tracking-widest mb-1">Dusun</p>
+                                <p class="text-white font-bold text-lg leading-none italic">4.575 <small class="text-[10px] font-normal opacity-50">Jiwa</small></p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/5 group hover:border-cyan-500/30 transition">
+                                <p class="text-slate-500 text-[9px] font-bold uppercase tracking-widest mb-1">Kepala Desa</p>
+                                <p class="text-white font-bold text-sm leading-none truncate mt-1 italic">Ari Pujiono</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/5 group hover:border-cyan-500/30 transition">
+                                <p class="text-slate-500 text-[9px] font-bold uppercase tracking-widest mb-1">RT / RW</p>
+                                <p class="text-white font-bold text-lg leading-none italic">14/04</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/5 group hover:border-cyan-500/30 transition">
+                                <p class="text-slate-500 text-[9px] font-bold uppercase tracking-widest mb-1">Kode Pos</p>
+                                <p class="text-white font-bold text-lg leading-none italic uppercase">53152</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-cyan-600/10 border border-cyan-500/20 flex items-center justify-center">
+                                <a href="#peta" class="text-cyan-400 text-[10px] font-bold uppercase tracking-widest hover:text-white transition flex items-center gap-1">
+                                    Peta Digital <span>&rarr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+    <section class="py-12 bg-slate-900/40">
+        <div class="container mx-auto px-6 grid md:grid-cols-3 gap-6">
+            
+<div class="glass-card glow-card p-8 rounded-[2.5rem] overflow-hidden border border-blue-500/10 md:col-span-2 group hover:border-cyan-500/30 transition-all duration-500 shadow-2xl bg-slate-900/40 backdrop-blur-md">
+    <div class="flex items-center gap-4 mb-8">
+        <div class="w-14 h-14 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-2xl flex items-center justify-center text-2xl shadow-inner border border-white/5">
+            💡
+        </div>
+        <div>
+            <h4 class="text-2xl font-bold text-white tracking-tight">Potensi Utama Desa</h4>
+            <p class="text-cyan-400/60 text-xs font-bold uppercase tracking-widest">Resource & Development</p>
+        </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-x-10 gap-y-8">
+        
+        <div class="relative pl-6 border-l-2 border-cyan-500/30">
+            <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.5)]"></div>
+            <h5 class="text-white font-bold mb-2 flex items-center gap-2">
+                <span class="text-cyan-400 text-lg">🌾</span> Pemberdayaan Masyarakat
+            </h5>
+            <p class="text-sm text-slate-400 leading-relaxed italic">
+            Aktif dalam program Bank Sampah "Berkah Ceria" untuk pengelolaan sampah dan ekonomi warga, serta pembentukan koperasi desa.            </p>
+        </div>
+
+        <div class="relative pl-6 border-l-2 border-blue-500/30">
+            <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+            <h5 class="text-white font-bold mb-2 flex items-center gap-2">
+                <span class="text-blue-400 text-lg">🐟</span> Pengembangan Ekonomi
+            </h5>
+            <p class="text-sm text-slate-400 leading-relaxed italic">
+              Membangun Gedung BUMDes "Dawuhanwetan Jaya" dan pengelolaan kebun desa melalui program Padat Karya Tunai Desa (PKTD)
+            </p>
+        </div>
+
+        <div class="relative pl-6 border-l-2 border-emerald-500/30">
+            <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div>
+            <h5 class="text-white font-bold mb-2 flex items-center gap-2">
+                <span class="text-emerald-400 text-lg">⛰️</span> Desa Wisata Edukasi
+            </h5>
+            <p class="text-sm text-slate-400 leading-relaxed italic">
+                Melalui monitoring dan evaluasi pembangunan desa, desa ini berupaya menjadi desa wisata edukasi untuk meningkatkan ekonomi warga.
+                </p>
+        </div>
+
+        <div class="relative pl-6 border-l-2 border-cyan-400/30">
+            <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(103,232,249,0.5)]"></div>
+            <h5 class="text-white font-bold mb-2 flex items-center gap-2">
+                <span class="text-cyan-300 text-lg">💧</span> Kreativitas Pemuda
+            </h5>
+            <p class="text-sm text-slate-400 leading-relaxed italic">
+Karang Taruna Desa Dawuhan Wetan pernah menjadi juara 1 tingkat Kabupaten Banyumas dan masuk 10 besar tingkat Provinsi.             </p>
+        </div>
+
+    </div>
+</div>
+<div class="glass-card glow-card p-8 rounded-[2.5rem] group relative overflow-hidden border border-blue-500/10 hover:border-cyan-500/30 transition-all duration-500 bg-slate-900/40 backdrop-blur-md">
+    <div class="absolute -top-10 -right-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl group-hover:bg-cyan-500/20 transition-colors"></div>
+
+    <div class="flex items-center gap-4 mb-8">
+        <div class="w-12 h-12 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 rounded-xl flex items-center justify-center text-xl shadow-inner border border-white/5 group-hover:scale-110 transition-transform">
+            🧭
+        </div>
+        <div>
+            <h4 class="text-xl font-bold text-white tracking-tight">Batas Wilayah</h4>
+            <p class="text-[10px] text-cyan-400 font-bold uppercase tracking-widest opacity-60">Desa Dawuhan Wetan</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 relative">
+        <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] transition-colors group/item">
+            <div class="flex flex-col">
+                <span class="text-[9px] font-black text-cyan-500 tracking-[0.2em] mb-1">UTARA</span>
+                <span class="text-sm font-semibold text-slate-200 group-hover/item:text-white transition-colors">Desa Kalisalak</span>
+            </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] transition-colors group/item">
+            <div class="flex flex-col">
+                <span class="text-[9px] font-black text-cyan-500 tracking-[0.2em] mb-1">TIMUR</span>
+                <span class="text-sm font-semibold text-slate-200 group-hover/item:text-white transition-colors">Desa Keniten</span>
+            </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] transition-colors group/item">
+            <div class="flex flex-col">
+                <span class="text-[9px] font-black text-cyan-500 tracking-[0.2em] mb-1">BARAT</span>
+                <span class="text-sm font-semibold text-slate-200 group-hover/item:text-white transition-colors">Desa Dawuhan Kulon</span>
+            </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] transition-colors group/item">
+            <div class="flex flex-col">
+                <span class="text-[9px] font-black text-cyan-500 tracking-[0.2em] mb-1">SELATAN</span>
+                <span class="text-sm font-semibold text-slate-200 group-hover/item:text-white transition-colors">Desa Kedungbanteng</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-6 pt-6 border-t border-white/5 flex justify-between items-center">
+        <span class="text-[10px] text-slate-500 font-mono tracking-tighter">Banyumas Jawatengah</span>
+        <div class="flex gap-1">
+            <div class="w-1 h-1 rounded-full bg-cyan-500 animate-pulse"></div>
+            <div class="w-1 h-1 rounded-full bg-cyan-500 animate-pulse delay-75"></div>
+            <div class="w-1 h-1 rounded-full bg-cyan-500 animate-pulse delay-150"></div>
+        </div>
+    </div>
+</div>
+        </div>
+    </section>
+
+ <section class="py-12">
+    <div class="container mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div class="group relative h-48 rounded-2xl overflow-hidden border border-cyan-500/20 
+            shadow-xl transition-all duration-300 hover:-translate-y-2 
+            hover:border-cyan-400 hover:shadow-cyan-500/20">
+
+    <!-- Pulse dot (pojok kanan atas) -->
+    <div class="absolute top-2 right-2 opacity-20 group-hover:opacity-100 transition-opacity duration-300 z-20">
+        <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+    </div>
+
+    <!-- Image -->
+    <img src="images/mas.jpg"
+         class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+         alt="Rumah Ibadah">
+
+    <!-- Overlay gradient -->
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+
+    <!-- Content -->
+    <div class="absolute bottom-4 left-4 right-4">
+        <span class="text-cyan-400 text-[9px] font-bold uppercase tracking-[0.2em]">
+            Layanan Publik
+        </span>
+        <h4 class="text-white font-bold text-lg group-hover:text-cyan-300 transition-colors">
+            Pemberdayaan Masyarakat
+        </h4>
+        <div class="h-1 w-8 bg-cyan-500 mt-2 rounded-full"></div>
+    </div>
+</div>
+
+
+        <div class="group relative h-48 rounded-2xl overflow-hidden border border-cyan-500/20 
+            shadow-xl transition-all duration-300 hover:-translate-y-2 
+            hover:border-cyan-400 hover:shadow-cyan-500/20">
+
+    <!-- Pulse dot (pojok kanan atas) -->
+    <div class="absolute top-2 right-2 opacity-20 group-hover:opacity-100 transition-opacity duration-300 z-20">
+        <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+    </div>
+
+    <!-- Image -->
+    <img src="images/tani.jpg"
+         class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+         alt="Rumah Ibadah">
+
+    <!-- Overlay gradient -->
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+
+    <!-- Content -->
+    <div class="absolute bottom-4 left-4 right-4">
+        <span class="text-cyan-400 text-[9px] font-bold uppercase tracking-[0.2em]">
+            Ekonomi
+        </span>
+        <h4 class="text-white font-bold text-lg group-hover:text-cyan-300 transition-colors">
+            Pengembangan Ekonomi
+        </h4>
+        <div class="h-1 w-8 bg-cyan-500 mt-2 rounded-full"></div>
+    </div>
+</div>
+
+
+        <div class="group relative h-48 rounded-2xl overflow-hidden border border-cyan-500/20 
+            shadow-xl transition-all duration-300 hover:-translate-y-2 
+            hover:border-cyan-400 hover:shadow-cyan-500/20">
+
+    <!-- Pulse dot (pojok kanan atas) -->
+    <div class="absolute top-2 right-2 opacity-20 group-hover:opacity-100 transition-opacity duration-300 z-20">
+        <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+    </div>
+
+    <!-- Image -->
+    <img src="images/karang.webp"
+         class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+         alt="Rumah Ibadah">
+
+    <!-- Overlay gradient -->
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+
+    <!-- Content -->
+    <div class="absolute bottom-4 left-4 right-4">
+        <span class="text-cyan-400 text-[9px] font-bold uppercase tracking-[0.2em]">
+            Kreativitas Pemuda
+        </span>
+        <h4 class="text-white font-bold text-lg group-hover:text-cyan-300 transition-colors">
+            Karangtaruna
+        </h4>
+        <div class="h-1 w-8 bg-cyan-500 mt-2 rounded-full"></div>
+    </div>
+</div>
+
+
+       <div class="group relative h-48 rounded-2xl overflow-hidden border border-cyan-500/20 
+            shadow-xl transition-all duration-300 hover:-translate-y-2 
+            hover:border-cyan-400 hover:shadow-cyan-500/20">
+
+    <!-- Pulse dot (pojok kanan atas) -->
+    <div class="absolute top-2 right-2 opacity-20 group-hover:opacity-100 transition-opacity duration-300 z-20">
+        <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+    </div>
+
+    <!-- Image -->
+    <img src="images/edu.jpg"
+         class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+         alt="Rumah Ibadah">
+
+    <!-- Overlay gradient -->
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+
+    <!-- Content -->
+    <div class="absolute bottom-4 left-4 right-4">
+        <span class="text-cyan-400 text-[9px] font-bold uppercase tracking-[0.2em]">
+            Wisata Edukasi
+        </span>
+        <h4 class="text-white font-bold text-lg group-hover:text-cyan-300 transition-colors">
+            Monitoring & Pengawasan
+        </h4>
+        <div class="h-1 w-8 bg-cyan-500 mt-2 rounded-full"></div>
+    </div>
+</div>
+
+
+    </div>
+</section>
+
+ <style>
+    @keyframes compass-wobble {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(3deg); }
+        75% { transform: rotate(-3deg); }
+    }
+    .compass-animate {
+        animation: compass-wobble 4s ease-in-out infinite;
+    }
+    /* Animasi putaran halus untuk ring luar */
+    .spin-slow {
+        animation: spin 15s linear infinite;
+    }
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+</style>
+
+<section id="peta" class="py-20 relative">
+    <div class="container mx-auto px-6">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-3xl font-bold text-white">Visualisasi Spasial Desa</h2>
+            <button onclick="toggleFullscreen()" class="px-6 py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg transition z-10">FULLSCREEN</button>
+        </div>
+        
+        <div id="mapContainer" class="glass-card p-2 rounded-[2rem] overflow-hidden transition-all duration-500 relative">
+            
+            <div id="fullscreenNav" class="hidden flex items-center justify-between bg-[#0f172a] p-4 border-b border-white/10 sticky top-0 z-[10000]">
+                <span class="text-cyan-400 font-bold">Peta Desa Dawuhan Wetan</span>
+                <button onclick="toggleFullscreen()" class="px-4 py-1.5 bg-red-500/20 text-red-400 rounded-lg text-xs hover:bg-red-500/40 transition">Keluar</button>
+            </div>
+
+            <div id="iframeWrapper" class="relative h-[550px] w-full rounded-[1.5rem] overflow-hidden bg-slate-800">
+                
+                <div class="absolute bottom-10 left-6 z-[999] pointer-events-none flex flex-col items-center gap-2">
+                    <div class="relative flex items-center justify-center w-16 h-16 bg-slate-900/90 backdrop-blur-xl rounded-full border border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+                        
+                        <div class="absolute inset-1 border border-dashed border-cyan-500/30 rounded-full spin-slow"></div>
+                        
+                        <div class="compass-animate flex flex-col items-center">
+                            <div class="w-1 h-7 bg-red-500 rounded-full shadow-[0_0_8px_rgba(239,68,68,0.6)]"></div>
+                            <div class="w-1 h-7 bg-slate-200 rounded-full"></div>
+                        </div>
+
+                        <span class="absolute top-1 text-[9px] font-bold text-white uppercase">N</span>
+                        <span class="absolute bottom-1 text-[9px] font-bold text-slate-500 uppercase">S</span>
+                        <span class="absolute left-1 text-[9px] font-bold text-slate-500">W</span>
+                        <span class="absolute right-1 text-[9px] font-bold text-slate-500">E</span>
+                    </div>
+                    <div class="px-2 py-0.5 bg-black/40 backdrop-blur-sm rounded border border-white/5">
+                        <span class="text-[7px] font-bold text-cyan-400 tracking-[0.2em] uppercase">Orientation</span>
+                    </div>
+                </div>
+
+                <iframe src="dawuhanwetan.html" class="w-full h-full border-none"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <footer class="py-12 text-center border-t border-white/5 opacity-60">
+        <p class="text-sm">© 2025 Arin Fronika Fariasih • WebGIS Desa Kedungbanteng</p>
+    </footer>
+
+    <script>
+        function toggleFullscreen() {
+            const container = document.getElementById('mapContainer');
+            const fullNav = document.getElementById('fullscreenNav');
+            const wrapper = document.getElementById('iframeWrapper');
+            
+            container.classList.toggle('map-fullscreen');
+            fullNav.classList.toggle('hidden');
+            
+            if (container.classList.contains('map-fullscreen')) {
+                wrapper.style.height = 'calc(100vh - 65px)';
+                document.body.style.overflow = 'hidden';
+            } else {
+                wrapper.style.height = '550px';
+                document.body.style.overflow = 'auto';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+var json_klinik_5 = {"type":"FeatureCollection","name":"klinik_5","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Naja Shafana Clinic","jmlh dok":"4"},"geometry":{"type":"Point","coordinates":[109.202242910459134,-7.383463181336399]}}]}

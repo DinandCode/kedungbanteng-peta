@@ -1,0 +1,1 @@
+var json_sdsmptk_5 = {"type":"FeatureCollection","name":"sdsmptk_5","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"SD N 2 Dawuhankulon","jmlh guru":"5"},"geometry":{"type":"Point","coordinates":[109.18932230491032,-7.372477370483842]}}]}

@@ -1,0 +1,1 @@
+var json_tempatibadah_2 = {"type":"FeatureCollection","name":"tempatibadah_2","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Masjid Al-Huda"},"geometry":{"type":"Point","coordinates":[109.190971520353699,-7.381069447256477]}}]}

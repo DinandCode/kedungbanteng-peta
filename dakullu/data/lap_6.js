@@ -1,0 +1,1 @@
+var json_lap_6 = {"type":"FeatureCollection","name":"lap_6","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Lap Dawuhankulon"},"geometry":{"type":"Point","coordinates":[109.19326666726441,-7.381909260732551]}}]}

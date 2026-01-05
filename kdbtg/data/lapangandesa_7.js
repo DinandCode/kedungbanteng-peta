@@ -1,0 +1,1 @@
+var json_lapangandesa_7 = {"type":"FeatureCollection","name":"lapangandesa_7","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Lapangan Kedungbanteng"},"geometry":{"type":"Point","coordinates":[109.199803265390202,-7.391090335237978]}}]}
